@@ -1,0 +1,336 @@
+{% extends "head.html" %}
+{% block body %}
+<script type="text/javascript">
+  setInterval(update_values, 1000);
+
+  function update_values() {
+      $.getJSON($SCRIPT_ROOT + '/_stuff',
+               
+      function(data) {
+        $('#temp').text(data.temp);
+        $('#hum').text(data.hum);
+        $('#pre').text(data.pre);
+
+        $('#tempx').text(data.temp);
+        $('#humx').text(data.hum);
+        $('#prex').text(data.pre);
+
+        $('#temperature').text(data.temperature);
+        $('#humidity').text(data.humidity);
+        $('#pressure').text(data.pressure);
+
+        $('#wind').text(data.wind);
+        $('#city').text(data.city);
+        $('#description').text(data.description);
+        $('#prediction').text(data.prediction);
+        $('#instuction').text(data.instuction);
+        $('#email').text(data.email);
+
+        $('#day10').text(data.day[1][0]);
+        $('#day00').text(data.day[0][0].temp);
+        $('#night0').text(data.night[0].temp);
+
+        $('#day11').text(data.day[1][1]);
+        $('#day01').text(data.day[0][1].temp);
+        $('#night1').text(data.night[1].temp);
+
+        $('#day12').text(data.day[1][2]);
+        $('#day02').text(data.day[0][2].temp);
+        $('#night2').text(data.night[2].temp);
+
+        $('#day13').text(data.day[1][3]);
+        $('#day03').text(data.day[0][3].temp);
+        $('#night3').text(data.night[3].temp);
+
+        $('#day14').text(data.day[1][4]);
+        $('#day04').text(data.day[0][4].temp);
+        $('#night4').text(data.night[4].temp);
+
+        let img0 = data.icon;
+        imgd0.src = `http://openweathermap.org/img/w/${img0}.png`
+
+        let img1 = data.day[0][0]['icon'];
+        imgd1.src = `http://openweathermap.org/img/w/${img1}.png`
+
+        let img2 = data.day[0][1]['icon'];
+        imgd2.src = `http://openweathermap.org/img/w/${img2}.png`
+
+        let img3 = data.day[0][2]['icon'];
+        imgd3.src = `http://openweathermap.org/img/w/${img3}.png`
+
+        let img4 = data.day[0][3]['icon'];
+        imgd4.src = `http://openweathermap.org/img/w/${img4}.png`
+
+        let img5 = data.day[0][3]['icon'];
+        imgd5.src = `http://openweathermap.org/img/w/${img5}.png`
+      });
+};
+</script>
+
+<body onload="update_values();" class="overlay-scrollbar" >
+    <!-- navbar -->
+    <div class="navbar">
+        <!-- nav left -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link">
+              <i class="fas fa-bars" onclick="collapseSidebar()"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+          </li>
+        </ul>
+        <!-- end nav left -->
+        <!-- form -->
+        <form class="navbar-name">
+          <h4 style="text-align: center">Weather App</h4>
+        </form>
+        <!-- end form -->
+        <!-- nav right -->
+        <ul class="navbar-nav nav-right">
+          <li class="nav-item mode">
+            <a class="nav-link" href="#" onclick="switchTheme()">
+              <i class="fas fa-moon dark-icon"></i>
+              <i class="fas fa-sun light-icon"></i>
+            </a>
+          </li>
+        </ul>
+        <!-- end nav right -->
+    </div>
+    <!-- end navbar -->
+    <!-- sidebar -->
+    <div class="sidebar">
+        <ul class="sidebar-nav">
+          
+          <li class="sidebar-nav-item">
+            <a href="#" class="sidebar-nav-link">
+              <div>
+                <i class="fas fa-tachometer-alt"></i>
+              </div>
+              <span>Dashboard</span>
+            </a>
+          </li>
+
+          <li  class="sidebar-nav-item">
+            <a href="{{ url_for('cool_form') }}" class="sidebar-nav-link">
+              <div>
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <span>Chart</span>
+            </a>
+          </li>
+
+        </ul>
+    </div>
+    <!-- end sidebar -->
+
+    <!-- main content -->
+    <div class="wrapper">
+      
+      <div class="row">
+        <div class="col-4 col-m-6 col-sm-6">
+          <div class="counter bg-primary">
+            <p>
+              <i class="fas fa-temperature-high"></i>
+            </p>
+            <h3><span id="temp">0</span></h3>
+            <p>Temperature</p>
+          </div>
+        </div>
+        <div class="col-4 col-m-6 col-sm-6">
+          <div class="counter bg-warning">
+            <p>
+              <i class="fas fa-tint"></i>
+            </p>
+            <h3><span id="hum">0</span></h3>
+            <p>Humidity</p>
+          </div>
+        </div>    
+        <div class="col-4 col-m-6 col-sm-6">
+          <div class="counter bg-success">
+            <p>
+              <i class="fas fa-tachometer-alt"></i>
+            </p>
+            <h3><span id="pre">0</span> </h3>
+            <p>Pressure</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+
+        <div class="col-4 col-m-12 col-sm-12">
+          <div class="card">
+            <div class="card-header">
+              <h3>
+                Weather Sensor Data
+              </h3>
+              <i class="fas fa-ellipsis-h"></i>
+            </div>
+            <div class="card-content">
+              <table>
+                <thead>
+                  <tr>
+                    <th><h1>Sensors</h1></th>
+                    <th><img src="https://projects-static.raspberrypi.org/projects/getting-started-with-the-sense-hat/653ef80ded139ef3aa6e17c5f24936e6c9b63b6a/en/images/sense-hat.png" alt="weather" style="width: 100px; height: 100px; background-size: 100% 100%;"/></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Temperature</td>
+                    <td><span id="tempx">0 </span>°C</td>
+                  </tr>
+                  <tr>
+                    <td>Humidity</td>
+                    <td><span id="humx">0 </span>%</td>
+                  </tr>
+                  <tr>
+                    <td>Pressure</td>
+                    <td><span id="prex">0 </span>hPa</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4 col-m-12 col-sm-12">
+          <div class="card">
+            <div class="card-header">
+              <h3>
+                Console
+              </h3>
+              <i class="fas fa-ellipsis-h"></i>
+            </div>
+            <div class="card-content">
+              <table>
+                <tbody>
+                  <tr>
+                    <h5><td>Today Look Likes <span id="description"></span></td></h5>
+                  </tr>
+                  <tr>
+                    <h5><td><span id="prediction"></span></td></h5>
+                  </tr>
+                  <tr>
+                    <h5><td><span id="instuction"></span></td></h5>
+                  </tr>
+                  <tr>
+                    <h5><td><span id="email"></span></td></h5>
+                  </tr>
+                  <tr>
+                    <h5><td><span></span></td></h5>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4 col-m-12 col-sm-12">
+          <div class="card">
+            <div class="card-header">
+              <h3>
+                Weather API Data
+              </h3>
+              <i class="fas fa-ellipsis-h"></i>
+            </div>
+            <div class="card-content">
+              <table>
+                <thead>
+                  <tr>
+                    <th><h1><span id="city"></span></h1></th>
+                    <th><img id="imgd0" alt="weather" style="width: 100px; height: 100px; background-size: 100% 100%;"/></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Temperature</td>
+                    <td><span id="temperature"></span> °C</td>
+                  </tr>
+                  <tr>
+                    <td>Humidity</td>
+                    <td><span id="humidity"></span> %</td>
+                  </tr>
+                  <tr>
+                    <td>Pressure</td>
+                    <td><span id="pressure"></span> hPa</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-m-12 col-sm-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 style="text-align: center">Next 5 Days Weather Forecast</h3>
+            </div>
+            <div class="card-content">
+              <table>
+
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Day Temp</th>
+                    <th>Night Temp</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+
+                  <tr>
+                    <td><h4><span id="day10"></h4></td>
+                    <td><h4><span id="day00"></span> °C</h4></td>
+                    <td><h4><span id="night0"></span> °C</h4></td>
+                    <td><img id="imgd1" alt="weather"/></td>
+                  </tr>
+
+                  <tr>
+                    <td><h4><span id="day11"></span></h4></td>
+                    <td><h4><span id="day01"></span> °C</h4></td>
+                    <td><h4><span id="night1"></span> °C</h4></td>
+                    <td><img id="imgd2" alt="weather"/></td>
+                  </tr>
+
+                  <tr>
+                    <td><h4><span id="day12"></span></h4></td>
+                    <td><h4><span id="day02"></span> °C</h4></td>
+                    <td><h4><span id="night2"></span> °C</h4></td>
+                    <td><img id="imgd3" alt="weather"/></td>
+                  </tr>
+
+                  <tr>
+                    <td><h4><span id="day13"></span></h4></td>
+                    <td><h4><span id="day03"></span> °C</h4></td>
+                    <td><h4><span id="night3"></span> °C</h4></td>
+                    <td><img id="imgd4" alt="weather"/></td>
+                  </tr>
+
+                  <tr>
+                    <td><h4><span id="day14"></span></h4></td>
+                    <td><h4><span id="day04"></span> °C</h4></td>
+                    <td><h4><span id="night4"></span> °C</h4></td>
+                    <td><img id="imgd5" alt="weather"/></td>
+                  </tr>
+
+                </tbody>
+                
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+<script src="{{url_for('static', filename='index.js')}}"></script>
+
+</body>
+{% endblock %}
