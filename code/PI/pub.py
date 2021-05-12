@@ -1,7 +1,6 @@
 # import libs
 import paho.mqtt.client as mqtt
 import os
-import serial
 import time
 import random
 from time import strftime
@@ -12,8 +11,6 @@ import schedule
 
 import numpy as np
 import tensorflow as tf
-import random
-import time
 
 # load the AI model
 model2 = tf.keras.models.load_model('./my_model')
